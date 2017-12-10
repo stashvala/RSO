@@ -5,10 +5,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity(name = "user")
+@Entity(name = "userT")
 @NamedQueries(value =
     {
-            @NamedQuery(name = "User.getAll", query = "SELECT * FROM user")
+            @NamedQuery(name = "User.getAll", query = "SELECT u FROM userT u")
     })
 @UuidGenerator(name =  "idGenerator")
 public class User{
