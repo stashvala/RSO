@@ -1,0 +1,12 @@
+language: java
+jdk: oraclejdk8
+install: true
+script:
+  - mvn clean package
+  - docker build -t $DOCKER_USERNAME/streaming-app:users-api ./user/
+  - docker build -t $DOCKER_USERNAME/streaming-app:videos-api ./video/
+
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker push $DOCKER_USERNAME/streaming-app:users-api
+  - docker push $DOCKER_USERNAME/streaming-app:videos-api
