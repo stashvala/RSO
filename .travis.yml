@@ -8,5 +8,5 @@ script:
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker push $DOCKER_USERNAME/streaming-app:users-api
-  - docker push $DOCKER_USERNAME/streaming-app:videos-api
+  - docker push $DOCKER_USERNAME/streaming_app:users-api
+  - docker push $DOCKER_USERNAME/streaming_app:videos-api
