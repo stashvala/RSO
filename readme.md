@@ -1,3 +1,3 @@
-https://travis-ci.org/stashvala/RSO.svg?branch=master
+![Travis CI badge](https://travis-ci.org/stashvala/RSO.svg?branch=master)
 
 # Cloud native streaming app
