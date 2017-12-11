@@ -1,9 +1,11 @@
 package streaming.user.persistence;
 import org.eclipse.persistence.annotations.UuidGenerator;
+import streaming.video.persistence.Video;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "userT")
 @NamedQueries(value =
@@ -27,6 +29,9 @@ public class User{
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
+
+    @Transient
+    private List<Video> videos;
 
     // getter and setter methods
 
@@ -68,5 +73,13 @@ public class User{
 
     public void setDateOfBirth(Date dob) {
         this.dateOfBirth = dob;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 }

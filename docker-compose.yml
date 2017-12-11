@@ -1,0 +1,45 @@
+version: "3"
+services:
+  postgres-user:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=user
+    ports:
+      - "5432:5432"
+
+  postgres-video:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=video
+    ports:
+      - "5433:5432"
+
+  user-service:
+    build:
+      context: ./user
+      dockerfile: Dockerfile
+      args:
+        buildno: 1
+    image: users-api:1.00
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-user:5432/user
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres-user
+
+  video-service:
+      build:
+        context: ./video
+        dockerfile: Dockerfile
+        args:
+          buildno: 1
+      image: videos-api:1.00
+      environment:
+        - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-video:5432/video
+      ports:
+        - "8081:8081"
+      depends_on:
+        - postgres-video

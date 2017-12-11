@@ -1,17 +1,32 @@
 package streaming.user.cdi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
-import streaming.user.persistence.User;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 
+import streaming.user.persistence.User;
+import streaming.video.persistence.Video;
+
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.UriInfo;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequestScoped
@@ -19,6 +34,24 @@ public class UsersBean {
 
     @PersistenceContext(unitName = "users-jpa")
     private EntityManager em;
+
+    private ObjectMapper objectMapper;
+
+    private HttpClient httpClient;
+
+    private String basePath;
+
+    @Inject
+    private UsersBean usersBean;
+
+    @PostConstruct
+    private void init() {
+        httpClient = HttpClientBuilder.create().build();
+        objectMapper = new ObjectMapper();
+
+        // basePath = "http://localhost:8081/v1/";
+    }
+
 
     public List<User> getUsers() {
 
@@ -36,7 +69,43 @@ public class UsersBean {
             throw new NotFoundException();
         }
 
+        List<Video> videos = usersBean.getVideos(userId);
+        user.setVideos(videos);
+
         return user;
+    }
+
+    public List<Video> getVideos(String userId) {
+
+        try {
+            HttpGet request = new HttpGet(basePath + "/v1/orders?where=customerId:EQ:" + userId);
+            HttpResponse response = httpClient.execute(request);
+
+            int status = response.getStatusLine().getStatusCode();
+
+            if (status >= 200 && status < 300) {
+                HttpEntity entity = response.getEntity();
+
+                if (entity != null)
+                    return getObjects(EntityUtils.toString(entity));
+            } else {
+                String msg = "Remote server '" + basePath + "' is responded with status " + status + ".";
+                //log.error(msg);
+                throw new InternalServerErrorException(msg);
+            }
+
+        } catch (IOException e) {
+            String msg = e.getClass().getName() + " occured: " + e.getMessage();
+            //log.error(msg);
+            throw new InternalServerErrorException(msg);
+        }
+        return new ArrayList<>();
+
+    }
+
+    private List<Video> getObjects(String json) throws IOException {
+        return json == null ? new ArrayList<>() : objectMapper.readValue(json,
+                objectMapper.getTypeFactory().constructCollectionType(List.class, Video.class));
     }
 
     public User createUser(User user) {
