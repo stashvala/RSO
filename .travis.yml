@@ -3,8 +3,8 @@ jdk: oraclejdk8
 install: true
 script:
   - mvn clean package
-  - docker build -t $DOCKER_USERNAME/$REPO:users-api -f user/Dockerfile.txt user/
-  - docker build -t $DOCKER_USERNAME/$REPO:videos-api -f video/Dockerfile.txt video/
+  - docker build -t $DOCKER_USERNAME/$REPO:users-api -f user/Dockerfile user/
+  - docker build -t $DOCKER_USERNAME/$REPO:videos-api -f video/Dockerfile video/
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
