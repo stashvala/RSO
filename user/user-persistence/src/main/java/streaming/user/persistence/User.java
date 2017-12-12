@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "userT")
+@Entity(name = "users") // Note: "user" is reserved name
 @NamedQueries(value =
     {
-            @NamedQuery(name = "User.getAll", query = "SELECT u FROM userT u")
+            @NamedQuery(name = "User.getAll", query = "SELECT u FROM users u")
     })
 @UuidGenerator(name =  "idGenerator")
 public class User{
@@ -25,7 +25,11 @@ public class User{
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;

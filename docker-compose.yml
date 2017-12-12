@@ -1,5 +1,25 @@
 version: "3"
 services:
+  etcd:
+    image: quay.io/coreos/etcd:latest
+    restart: always
+    ports:
+      - "2379:2379"
+    volumes:
+      - /tmp/etcd-data:/etcd-data
+    environment:
+      - ETCD_NAME=my-etcd
+      - ETCD_DATA_DIR=/etcd-data
+      - ETCD_LISTEN_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_ADVERTISE_CLIENT_URLS=http://0.0.0.0:2379
+      - ETCD_LISTEN_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_INITIAL_ADVERTISE_PEER_URLS=http://0.0.0.0:2380
+      - ETCD_INITIAL_CLUSTER=my-etcd=http://0.0.0.0:2380
+      - ETCD_INITIAL_CLUSTER_TOKEN=my-etcd-token
+      - ETCD_INITIAL_CLUSTER_STATE=new
+      - ETCD_AUTO_COMPACTION_RETENTION=1
+      - ETCD_CORS=*
+
   postgres-user:
     image: postgres:latest
     environment:
@@ -17,29 +37,30 @@ services:
       - "5433:5432"
 
   user-service:
-    build:
-      context: ./user
-      dockerfile: Dockerfile
-      args:
-        buildno: 1
-    image: users-api:1.00
+#    build:
+#      context: user
+#      dockerfile: Dockerfile
+    image: stashvala/streaming_app:users-api
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-user:5432/user
+      - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
     ports:
       - "8080:8080"
     depends_on:
       - postgres-user
 
   video-service:
-      build:
-        context: ./video
-        dockerfile: Dockerfile
-        args:
-          buildno: 1
-      image: videos-api:1.00
-      environment:
-        - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-video:5432/video
-      ports:
-        - "8081:8081"
-      depends_on:
-        - postgres-video
+#      build:
+#        context: video
+#        dockerfile: Dockerfile
+    image: stashvala/streaming_app:videos-api
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-video:5432/video
+      - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+      - KUMULUZEE_SERVER_BASE-URL=http://video-service:8081
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres-video

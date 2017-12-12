@@ -23,6 +23,8 @@
         <kumuluzee.version>2.4.1</kumuluzee.version>
         <postgresql.version>42.1.4</postgresql.version>
         <httpclient.version>4.5.3</httpclient.version>
+        <kumuluzee-config.version>1.0.0</kumuluzee-config.version>
+        <kumuluzee-discovery.version>1.1.0-SNAPSHOT</kumuluzee-discovery.version>
     </properties>
 
     <repositories>

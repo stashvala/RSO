@@ -1,6 +1,7 @@
 package streaming.user.cdi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import org.apache.http.HttpEntity;
@@ -28,6 +29,7 @@ import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestScoped
 public class UsersBean {
@@ -39,7 +41,9 @@ public class UsersBean {
 
     private HttpClient httpClient;
 
-    private String basePath;
+    @Inject
+    @DiscoverService(value = "video-service", environment = "dev")
+    private Optional<String> basePath;
 
     @Inject
     private UsersBean usersBean;
@@ -62,42 +66,50 @@ public class UsersBean {
     }
 
     public User getUser(String userId) {
-
+        System.out.println("bean getUser: "+ userId);
         User user = em.find(User.class, userId);
 
         if (user == null) {
             throw new NotFoundException();
         }
-
+        System.out.println("1user name = "+ user.getFirstName());
         List<Video> videos = usersBean.getVideos(userId);
+        System.out.println("2user name = "+ user.getFirstName());
         user.setVideos(videos);
 
         return user;
     }
 
     public List<Video> getVideos(String userId) {
+        System.out.println("Basepath = "+basePath.get());
+        if (basePath.isPresent()) {
+            try {
+                HttpGet request = new HttpGet(basePath.get() + "/v1/orders?where=customerId:EQ:" + userId);
+                HttpResponse response = httpClient.execute(request);
 
-        try {
-            HttpGet request = new HttpGet(basePath + "/v1/orders?where=customerId:EQ:" + userId);
-            HttpResponse response = httpClient.execute(request);
+                int status = response.getStatusLine().getStatusCode();
 
-            int status = response.getStatusLine().getStatusCode();
+                if (status >= 200 && status < 300) {
+                    HttpEntity entity = response.getEntity();
 
-            if (status >= 200 && status < 300) {
-                HttpEntity entity = response.getEntity();
+                    if (entity != null)
+                        return getObjects(EntityUtils.toString(entity));
+                } else {
+                    String msg = "Remote server '" + basePath + "' is responded with status " + status + ".";
+                    System.out.println(msg);
+                    //log.error(msg);
+                    throw new InternalServerErrorException(msg);
+                }
 
-                if (entity != null)
-                    return getObjects(EntityUtils.toString(entity));
-            } else {
-                String msg = "Remote server '" + basePath + "' is responded with status " + status + ".";
+            } catch (IOException e) {
+                String msg = e.getClass().getName() + " occured: " + e.getMessage()
+                        + ". BasePath " + basePath.get() + " was used.";
+                System.out.println(msg);
                 //log.error(msg);
                 throw new InternalServerErrorException(msg);
             }
-
-        } catch (IOException e) {
-            String msg = e.getClass().getName() + " occured: " + e.getMessage();
-            //log.error(msg);
-            throw new InternalServerErrorException(msg);
+        } else {
+            System.out.println("Video service not yet discovered...");
         }
         return new ArrayList<>();
 

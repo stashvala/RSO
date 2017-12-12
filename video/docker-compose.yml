@@ -8,7 +8,7 @@ services:
     ports:
       - "5433:5432"
   video-service:
-    image: videos-api:1.00
+    image: videos-api
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/video
     ports:

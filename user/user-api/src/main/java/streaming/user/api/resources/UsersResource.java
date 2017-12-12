@@ -35,6 +35,7 @@ public class UsersResource {
     @GET
     @Path("/{User_id}")
     public Response getUser(@PathParam("User_id") String user_id) {
+        System.out.println("resource getUser: "+ user_id);
         User user = usersBean.getUser(user_id);
         if (user == null) return Response.status(Response.Status.NOT_FOUND).build();
 

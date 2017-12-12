@@ -17,9 +17,17 @@ public class Video{
     @GeneratedValue(generator = "idGenerator")
     private String id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "user_id")
+    private String userId;
 
+    @Column(name = "title")
+    private String title;
+
+    @Column(name = "duration")
+    private double duration;
+
+    @Column(name = "views")
+    private int views;
 
     // getter and setter methods
 
@@ -31,12 +39,35 @@ public class Video{
         id = new_id;
     }
 
-    public String getName() {
-        return name;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
 }
