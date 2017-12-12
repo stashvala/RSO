@@ -37,10 +37,11 @@ services:
       - "5433:5432"
 
   user-service:
-#    build:
-#      context: user
-#      dockerfile: Dockerfile
-    image: stashvala/streaming_app:users-api
+    build:
+      context: user
+      dockerfile: Dockerfile
+    #image: stashvala/streaming_app:users-api # used for local building
+    image: users-api
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-user:5432/user
       - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
@@ -51,10 +52,11 @@ services:
       - postgres-user
 
   video-service:
-#      build:
-#        context: video
-#        dockerfile: Dockerfile
-    image: stashvala/streaming_app:videos-api
+    build:
+      context: video
+      dockerfile: Dockerfile
+    #image: stashvala/streaming_app:videos-api # used for local building
+    image: videos-api
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-video:5432/video
       - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
