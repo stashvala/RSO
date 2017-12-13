@@ -5,6 +5,7 @@ script:
   - mvn clean package
   - docker build -t $DOCKER_USERNAME/$REPO:users-api -f user/Dockerfile user/
   - docker build -t $DOCKER_USERNAME/$REPO:videos-api -f video/Dockerfile video/
+  - docker build -t $DOCKER_USERNAME/$REPO:demo-api -f demo/Dockerfile demo/
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"

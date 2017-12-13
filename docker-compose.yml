@@ -63,6 +63,14 @@ services:
       - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
       - KUMULUZEE_SERVER_BASE-URL=http://video-service:8081
     ports:
-      - "8081:8081"
+      - "8082:8082"
     depends_on:
       - postgres-video
+
+  demo-service:
+      build:
+        context: demo
+        dockerfile: Dockerfile
+      image: demo-api
+      ports:
+        - "8081:8081"
