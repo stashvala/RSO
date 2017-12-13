@@ -5,6 +5,7 @@ import com.kumuluz.ee.logs.cdi.Log;
 
 import streaming.user.persistence.User;
 import streaming.user.cdi.UsersBean;
+import streaming.user.api.configuration.RestProperties;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -28,6 +29,9 @@ public class UsersResource {
     @Inject
     private UsersBean usersBean;
 
+    @Inject
+    private RestProperties restProperties;
+
     @Context
     protected UriInfo uriInfo;
 
@@ -45,6 +49,13 @@ public class UsersResource {
         if (user == null) return Response.status(Response.Status.NOT_FOUND).build();
 
         return Response.status(Response.Status.OK).entity(user).build();
+    }
+
+    @POST
+    @Path("healthy")
+    public Response setHealth(Boolean healthy) {
+        restProperties.setHealthy(healthy);
+        return Response.ok().build();
     }
 
     @PUT
