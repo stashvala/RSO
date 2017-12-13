@@ -1,0 +1,31 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: video-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: video
+    spec:
+      containers:
+      - image: stashvala/streaming_app:videos-api
+        name: kubernetes-video
+        env:
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-video:5432/video
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: private-coreos
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://192.168.29.247:30052
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-video:5432/video
+        ports:
+        - containerPort: 8081
+          name: server
+          protocol: TCP

@@ -29,8 +29,8 @@ public class DemoResource {
         out_json.add("opis_projekta","Nas projekt implementira aplikacijo za pretocne vsebine.");
 
         JsonArrayBuilder ms_url = Json.createArrayBuilder();
-        ms_url.add("http://169.51.22.8:30950/v1/videos/");
-        ms_url.add("http://169.51.22.8:31931/v1/users/");
+        ms_url.add("localhost:8080/v1/users/");
+        ms_url.add("localhost:8082/v1/videos/");
         out_json.add("mikrostoritve",ms_url.build());
 
         JsonArrayBuilder github_url = Json.createArrayBuilder();
