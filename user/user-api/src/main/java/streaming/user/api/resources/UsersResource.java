@@ -1,6 +1,7 @@
 package streaming.user.api.resources;
 
 import com.sun.org.apache.regexp.internal.RE;
+import com.kumuluz.ee.logs.cdi.Log;
 
 import streaming.user.persistence.User;
 import streaming.user.cdi.UsersBean;
@@ -13,12 +14,16 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
+import java.util.logging.Logger;
 
+@Log
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("users")
 public class UsersResource {
+
+    private Logger log = Logger.getLogger(UsersResource.class.getName());
 
     @Inject
     private UsersBean usersBean;
@@ -35,7 +40,7 @@ public class UsersResource {
     @GET
     @Path("/{User_id}")
     public Response getUser(@PathParam("User_id") String user_id) {
-        System.out.println("resource getUser: "+ user_id);
+        log.info("Querying user " + user_id);
         User user = usersBean.getUser(user_id);
         if (user == null) return Response.status(Response.Status.NOT_FOUND).build();
 

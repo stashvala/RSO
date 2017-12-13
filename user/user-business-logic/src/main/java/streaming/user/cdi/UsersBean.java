@@ -30,9 +30,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @RequestScoped
 public class UsersBean {
+
+    private Logger log = Logger.getLogger(UsersBean.class.getName());
 
     @PersistenceContext(unitName = "users-jpa")
     private EntityManager em;
@@ -96,16 +99,14 @@ public class UsersBean {
                         return getObjects(EntityUtils.toString(entity));
                 } else {
                     String msg = "Remote server '" + basePath + "' is responded with status " + status + ".";
-                    System.out.println(msg);
-                    //log.error(msg);
+                    log.warning(msg);
                     throw new InternalServerErrorException(msg);
                 }
 
             } catch (IOException e) {
                 String msg = e.getClass().getName() + " occured: " + e.getMessage()
                         + ". BasePath " + basePath.get() + " was used.";
-                System.out.println(msg);
-                //log.error(msg);
+                log.warning(msg);
                 throw new InternalServerErrorException(msg);
             }
         } else {
