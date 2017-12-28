@@ -10,7 +10,8 @@ spec:
         app: postgres-video
     spec:
       containers:
-      - image: postgres:latest
+      #- image: postgres:latest
+      - image: centos/postgresql-94-centos7
         name: postgres-video
         env:
           - name: POSTGRES_PASSWORD
@@ -31,7 +32,7 @@ kind: Service
 metadata:
   name: postgres-video
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - port: 5432
     protocol: TCP

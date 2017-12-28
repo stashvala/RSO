@@ -9,7 +9,7 @@ kumuluzee:
       port: 8082
   datasources:
     - jndi-name: jdbc/VideosDS
-      connection-url: jdbc:postgresql://localhost:5432/videos
+      connection-url: jdbc:postgresql://172.17.0.1:33334/videos
       username: postgres
       password: postgres
       max-pool-size: 20
@@ -17,9 +17,9 @@ kumuluzee:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
     etcd:
-      hosts: http://localhost:2379
+      hosts: http://172.17.0.1:2379
   discovery:
     etcd:
-      hosts: http://localhost:2379
+      hosts: http://172.17.0.1:2379
     ttl: 30
     ping-interval: 5

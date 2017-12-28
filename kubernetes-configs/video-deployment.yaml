@@ -10,21 +10,20 @@ spec:
         app: video
     spec:
       containers:
-      - image: stashvala/streaming_app:videos-api
+      - image: docker.io/stashvala/streaming_app:videos-api
+        imagePullPolicy: Always
         name: kubernetes-video
         env:
-          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-            value: jdbc:postgresql://postgres-video:5432/video
           - name: KUMULUZEE_DISCOVERY_CLUSTER
-            value: private-coreos
+            value: googlecloud
           - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
             value: http://etcd:2379
           - name: KUMULUZEE_CONFIG_ETCD_HOSTS
             value: http://etcd:2379
-          - name: KUMULUZEE_SERVER_BASEURL
-            value: http://192.168.29.247:30052
-          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
             value: jdbc:postgresql://postgres-video:5432/video
+          - name: KUMULUZEE_DATASOURCES0_PASSWORD
+            value: postgres
         ports:
         - containerPort: 8081
           name: server

@@ -6,12 +6,12 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=video
     ports:
-      - "5433:5432"
+      - "33333:5432"
   video-service:
     image: videos-api
     environment:
-      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/video
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://172.17.0.1:33333/video
     ports:
-      - "8081:8081"
+      - "8080:8080"
     depends_on:
       - postgres
