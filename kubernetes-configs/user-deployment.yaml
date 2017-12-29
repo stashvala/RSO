@@ -10,12 +10,12 @@ spec:
         app: user
     spec:
       containers:
-      - image: docker.io/stashvala/streaming_app:users-api
+      - image: stashvala/streaming_app:users-api
         imagePullPolicy: Always
-        name: user
+        name: kubernetes-user
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
-            value: googlecloud
+            value: private-coreos
           - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
             value: http://etcd:2379
           - name: KUMULUZEE_CONFIG_ETCD_HOSTS
@@ -24,6 +24,10 @@ spec:
             value: jdbc:postgresql://postgres-user:5432/user
           - name: KUMULUZEE_DATASOURCES0_PASSWORD
             value: postgres
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://192.168.29.246:30052
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-user:5432/user
         #livenessProbe:
         #  httpGet:
         #    path: /health

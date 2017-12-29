@@ -10,7 +10,7 @@ spec:
         app: video
     spec:
       containers:
-      - image: docker.io/stashvala/streaming_app:videos-api
+      - image: stashvala/streaming_app:videos-api
         imagePullPolicy: Always
         name: kubernetes-video
         env:
@@ -24,7 +24,11 @@ spec:
             value: jdbc:postgresql://postgres-video:5432/video
           - name: KUMULUZEE_DATASOURCES0_PASSWORD
             value: postgres
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://192.168.29.247:30052
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-video:5432/video
         ports:
-        - containerPort: 8081
+        - containerPort: 8082
           name: server
           protocol: TCP

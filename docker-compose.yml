@@ -40,8 +40,8 @@ services:
     build:
       context: user
       dockerfile: Dockerfile
-    #image: stashvala/streaming_app:users-api # used for local building
-    image: users-api
+    image: stashvala/streaming_app:users-api
+    #image: users-api # used for local building
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-user:5432/user
       - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
@@ -55,8 +55,8 @@ services:
     build:
       context: video
       dockerfile: Dockerfile
-    #image: stashvala/streaming_app:videos-api # used for local building
-    image: videos-api
+    image: stashvala/streaming_app:videos-api
+    #image: videos-api # used for local building
     environment:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-video:5432/video
       - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379

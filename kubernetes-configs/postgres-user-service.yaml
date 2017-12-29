@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: user
+  name: postgres-user
 spec:
   type: NodePort
   ports:
-  - port: 8080
+  - port: 5432
     protocol: TCP
-    targetPort: 8080
+    targetPort: 5432
   selector:
-    app: user
+    app: postgres-user

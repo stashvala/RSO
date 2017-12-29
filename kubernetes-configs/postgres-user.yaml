@@ -10,8 +10,7 @@ spec:
         app: postgres-user
     spec:
       containers:
-      #- image: postgres:latest
-      - image: centos/postgresql-94-centos7
+      - image: postgres:latest
         name: postgres-user
         env:
           - name: POSTGRES_PASSWORD
@@ -23,19 +22,3 @@ spec:
         - containerPort: 5432
           name: server
           protocol: TCP
-
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres-user
-spec:
-  type: ClusterIP
-  ports:
-  - port: 5432
-    protocol: TCP
-    targetPort: 5432
-  selector:
-    app: postgres-user

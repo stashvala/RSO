@@ -6,11 +6,11 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=user
     ports:
-      - "33333:5432"
+      - "5432:5432"
   user-service:
     image: users-api
     environment:
-      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://172.17.0.1:33333/user
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/user
     ports:
       - "8080:8080"
     depends_on:
