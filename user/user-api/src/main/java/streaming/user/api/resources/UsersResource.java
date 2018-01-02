@@ -1,5 +1,7 @@
 package streaming.user.api.resources;
 
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.sun.org.apache.regexp.internal.RE;
 import com.kumuluz.ee.logs.cdi.Log;
 
@@ -15,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Log
 @RequestScoped
@@ -24,7 +25,7 @@ import java.util.logging.Logger;
 @Path("users")
 public class UsersResource {
 
-    private Logger log = Logger.getLogger(UsersResource.class.getName());
+    private Logger log = LogManager.getLogger(UsersResource.class.getName());
 
     @Inject
     private UsersBean usersBean;
