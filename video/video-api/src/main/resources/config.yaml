@@ -14,12 +14,10 @@ kumuluzee:
       password: postgres
       max-pool-size: 20
   config:
-    start-retry-delay-ms: 500
-    max-retry-delay-ms: 900000
     etcd:
-      hosts: http://172.17.0.1:2379
+      hosts: http://192.168.99.100:2379
   discovery:
     etcd:
       hosts: http://localhost:2379
-    ttl: 30
-    ping-interval: 5
+    ttl: 20
+    ping-interval: 15

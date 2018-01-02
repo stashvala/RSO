@@ -14,40 +14,8 @@ kumuluzee:
       password: postgres
       max-pool-size: 20
   config:
-    start-retry-delay-ms: 500
-    max-retry-delay-ms: 900000
     etcd:
       hosts: http://localhost:2379
   discovery:
     etcd:
       hosts: http://localhost:2379
-    ttl: 30
-    ping-interval: 5
-  health:
-    checks:
-      data-source-health-check:
-        jndi-name: jdbc/UsersDS
-#  logs:
-#    config-file: '<?xml version="1.0" encoding="UTF-8"?>
-#                  <Configuration name="user-service">
-#                      <Appenders>
-#                          <Console name="console" target="SYSTEM_OUT">
-#                              <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
-#                          </Console>
-#                          <Socket name="logstash" host="85ebe26b-3a39-4754-8516-d8d6be2f154f-ls.logit.io" port="21183"
-#                                                                                         protocol="tcp">
-#                              <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
-#                          </Socket>
-#                      </Appenders>
-#                      <Loggers>
-#                          <!-- Default logger -->
-#                          <Root level="all">
-#                              <AppenderRef ref="console" level="info"/>
-#                              <AppenderRef ref="logstash" level="trace"/>
-#                          </Root>
-#                      </Loggers>
-#                  </Configuration>'
-#  rest-properties:
-#    external-services:
-#      video-service:
-#        enabled: true

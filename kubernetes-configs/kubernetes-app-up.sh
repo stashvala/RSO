@@ -2,6 +2,7 @@
 
 # etcd
 
+kubectl create -f etcd-service.yaml
 kubectl create -f etcd.yaml  
 
 # user

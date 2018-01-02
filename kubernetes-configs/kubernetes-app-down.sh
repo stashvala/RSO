@@ -2,7 +2,8 @@
 
 # etcd
 
-kubectl delete -f etcd.yaml  
+kubectl delete -f etcd-service.yaml
+kubectl delete -f etcd.yaml
 
 # user
 
