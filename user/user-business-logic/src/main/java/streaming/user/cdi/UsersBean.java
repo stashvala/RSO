@@ -73,7 +73,8 @@ public class UsersBean {
     }
 
     public User getUser(String userId) {
-        System.out.println("bean getUser: " + userId);
+        //System.out.println("bean getUser: " + userId);
+        log.info("bean getUser: " + userId);
         User user = em.find(User.class, userId);
 
         if (user == null) {
@@ -84,7 +85,8 @@ public class UsersBean {
             List<Video> videos = usersBean.getVideos(userId);
             user.setVideos(videos);
         } else {
-            System.out.println("Video service is disabled");
+            //System.out.println("Video service is disabled");
+            log.warning("Video service is disabled");
         }
 
 
@@ -92,7 +94,8 @@ public class UsersBean {
     }
 
     public List<Video> getVideos(String userId) {
-        System.out.println("Basepath = " + basePath.get());
+        //System.out.println("Basepath = " + basePath.get());
+        log.info("Basepath = " + basePath.get());
         if (basePath.isPresent()) {
             try {
                 HttpGet request = new HttpGet(basePath.get() + "/v1/videos?where=userId:EQ:" + userId);
@@ -119,7 +122,8 @@ public class UsersBean {
                 throw new InternalServerErrorException(msg);
             }
         } else {
-            System.out.println("Video service not yet discovered...");
+            //System.out.println("Video service not yet discovered...");
+            log.warning("Video service not yet discovered...");
         }
 
         return new ArrayList<>();
