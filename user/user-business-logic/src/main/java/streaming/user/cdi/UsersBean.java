@@ -14,6 +14,7 @@ import org.apache.http.util.EntityUtils;
 
 import streaming.user.persistence.User;
 import streaming.video.persistence.Video;
+import streaming.user.cdi.configuration.RestProperties;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -45,6 +46,9 @@ public class UsersBean {
     private HttpClient httpClient;
 
     @Inject
+    private RestProperties restProperties;
+
+    @Inject
     @DiscoverService(value = "video-service", environment = "dev")
     private Optional<String> basePath;
 
@@ -69,22 +73,26 @@ public class UsersBean {
     }
 
     public User getUser(String userId) {
-        System.out.println("bean getUser: "+ userId);
+        System.out.println("bean getUser: " + userId);
         User user = em.find(User.class, userId);
 
         if (user == null) {
             throw new NotFoundException();
         }
-        System.out.println("1user name = "+ user.getFirstName());
-        List<Video> videos = usersBean.getVideos(userId);
-        System.out.println("2user name = "+ user.getFirstName());
-        user.setVideos(videos);
+
+        if (restProperties.isVideoServiceEnabled()) {
+            List<Video> videos = usersBean.getVideos(userId);
+            user.setVideos(videos);
+        } else {
+            System.out.println("Video service is disabled");
+        }
+
 
         return user;
     }
 
     public List<Video> getVideos(String userId) {
-        System.out.println("Basepath = "+basePath.get());
+        System.out.println("Basepath = " + basePath.get());
         if (basePath.isPresent()) {
             try {
                 HttpGet request = new HttpGet(basePath.get() + "/v1/videos?where=userId:EQ:" + userId);
@@ -95,8 +103,9 @@ public class UsersBean {
                 if (status >= 200 && status < 300) {
                     HttpEntity entity = response.getEntity();
 
-                    if (entity != null)
+                    if (entity != null) {
                         return getObjects(EntityUtils.toString(entity));
+                    }
                 } else {
                     String msg = "Remote server '" + basePath + "' has responded with status " + status + ".";
                     log.warning(msg);
@@ -122,7 +131,6 @@ public class UsersBean {
     }
 
     public User createUser(User user) {
-
         try {
             beginTx();
             em.persist(user);
