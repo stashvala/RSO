@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: video
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 8082
     protocol: TCP

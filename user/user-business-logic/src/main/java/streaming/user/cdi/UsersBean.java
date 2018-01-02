@@ -87,7 +87,7 @@ public class UsersBean {
         System.out.println("Basepath = "+basePath.get());
         if (basePath.isPresent()) {
             try {
-                HttpGet request = new HttpGet(basePath.get() + "/v1/orders?where=customerId:EQ:" + userId);
+                HttpGet request = new HttpGet(basePath.get() + "/v1/videos?where=userId:EQ:" + userId);
                 HttpResponse response = httpClient.execute(request);
 
                 int status = response.getStatusLine().getStatusCode();
@@ -98,7 +98,7 @@ public class UsersBean {
                     if (entity != null)
                         return getObjects(EntityUtils.toString(entity));
                 } else {
-                    String msg = "Remote server '" + basePath + "' is responded with status " + status + ".";
+                    String msg = "Remote server '" + basePath + "' has responded with status " + status + ".";
                     log.warning(msg);
                     throw new InternalServerErrorException(msg);
                 }
@@ -112,8 +112,8 @@ public class UsersBean {
         } else {
             System.out.println("Video service not yet discovered...");
         }
-        return new ArrayList<>();
 
+        return new ArrayList<>();
     }
 
     private List<Video> getObjects(String json) throws IOException {

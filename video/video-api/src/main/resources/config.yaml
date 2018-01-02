@@ -4,12 +4,12 @@ kumuluzee:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8082
+    base-url: http://*:8082
     http:
       port: 8082
   datasources:
     - jndi-name: jdbc/VideosDS
-      connection-url: jdbc:postgresql://172.17.0.1:33334/videos
+      connection-url: jdbc:postgresql://172.17.0.1:5433/videos
       username: postgres
       password: postgres
       max-pool-size: 20
@@ -20,6 +20,6 @@ kumuluzee:
       hosts: http://172.17.0.1:2379
   discovery:
     etcd:
-      hosts: http://172.17.0.1:2379
+      hosts: http://localhost:2379
     ttl: 30
     ping-interval: 5
