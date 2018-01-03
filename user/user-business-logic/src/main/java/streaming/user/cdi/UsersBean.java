@@ -81,14 +81,8 @@ public class UsersBean {
             throw new NotFoundException();
         }
 
-        if (restProperties.isVideoServiceEnabled()) {
-            List<Video> videos = usersBean.getVideos(userId);
-            user.setVideos(videos);
-        } else {
-            //System.out.println("Video service is disabled");
-            log.warning("Video service is disabled");
-        }
-
+        List<Video> videos = usersBean.getVideos(userId);
+        user.setVideos(videos);
 
         return user;
     }
