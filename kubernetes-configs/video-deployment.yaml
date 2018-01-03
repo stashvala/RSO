@@ -25,7 +25,7 @@ spec:
           - name: KUMULUZEE_DATASOURCES0_PASSWORD
             value: postgres
           - name: KUMULUZEE_SERVER_BASEURL
-            value: http://192.168.29.247:30052
+            value: http://video:8082
           - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
             value: jdbc:postgresql://postgres-video:5432/video
         ports:
