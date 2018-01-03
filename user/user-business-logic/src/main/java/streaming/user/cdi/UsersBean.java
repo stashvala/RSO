@@ -31,12 +31,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
+import com.kumuluz.ee.logs.cdi.Log;
+//import java.util.logging.Logger;
 
 @RequestScoped
+@Log
 public class UsersBean {
 
-    private Logger log = Logger.getLogger(UsersBean.class.getName());
+    private Logger log = LogManager.getLogger(UsersBean.class.getName());
 
     @PersistenceContext(unitName = "users-jpa")
     private EntityManager em;
@@ -72,6 +76,7 @@ public class UsersBean {
 
     }
 
+    @Log
     public User getUser(String userId) {
         //System.out.println("bean getUser: " + userId);
         log.info("bean getUser: " + userId);
@@ -87,6 +92,7 @@ public class UsersBean {
         return user;
     }
 
+    @Log
     public List<Video> getVideos(String userId) {
         //System.out.println("Basepath = " + basePath.get());
         log.info("Basepath = " + basePath.get());
@@ -105,19 +111,19 @@ public class UsersBean {
                     }
                 } else {
                     String msg = "Remote server '" + basePath + "' has responded with status " + status + ".";
-                    log.warning(msg);
+                    log.error(msg);
                     throw new InternalServerErrorException(msg);
                 }
 
             } catch (IOException e) {
                 String msg = e.getClass().getName() + " occured: " + e.getMessage()
                         + ". BasePath " + basePath.get() + " was used.";
-                log.warning(msg);
+                log.error(msg);
                 throw new InternalServerErrorException(msg);
             }
         } else {
             //System.out.println("Video service not yet discovered...");
-            log.warning("Video service not yet discovered...");
+            log.error("Video service not yet discovered...");
         }
 
         return new ArrayList<>();
