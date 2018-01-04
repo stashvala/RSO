@@ -8,7 +8,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -29,8 +28,8 @@ public class DemoResource {
         out_json.add("opis_projekta","Nas projekt implementira aplikacijo za pretocne vsebine.");
 
         JsonArrayBuilder ms_url = Json.createArrayBuilder();
-        ms_url.add("localhost:8080/v1/users/");
-        ms_url.add("localhost:8082/v1/videos/");
+        ms_url.add("35.195.180.43:8080/v1/users/");
+        ms_url.add("35.205.46.133:8082/v1/videos/");
         out_json.add("mikrostoritve",ms_url.build());
 
         JsonArrayBuilder github_url = Json.createArrayBuilder();
