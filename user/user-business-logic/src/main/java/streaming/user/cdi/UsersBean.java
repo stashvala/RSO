@@ -34,7 +34,6 @@ import java.util.Optional;
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
-//import java.util.logging.Logger;
 
 @RequestScoped
 @Log

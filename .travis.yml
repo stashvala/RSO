@@ -11,3 +11,4 @@ after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push $DOCKER_USERNAME/$REPO:users-api
   - docker push $DOCKER_USERNAME/$REPO:videos-api
+  - docker push $DOCKER_USERNAME/$REPO:demo-api

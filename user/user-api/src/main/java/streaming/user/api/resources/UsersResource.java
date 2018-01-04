@@ -56,6 +56,7 @@ public class UsersResource {
     @Path("healthy")
     public Response setHealth(Boolean healthy) {
         restProperties.setHealthy(healthy);
+        log.info("Setting health to " + healthy);
         return Response.ok().build();
     }
 

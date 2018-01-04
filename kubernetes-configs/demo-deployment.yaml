@@ -1,0 +1,19 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: demo-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - image: stashvala/streaming_app:demo-api
+        imagePullPolicy: Always
+        name: kubernetes-demo
+        ports:
+        - containerPort: 8081
+          name: server
+          protocol: TCP

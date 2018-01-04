@@ -19,6 +19,10 @@ kumuluzee:
   discovery:
     etcd:
       hosts: http://localhost:2379
+  health:
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/UsersDS
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                   <Configuration name="users">
@@ -39,3 +43,5 @@ kumuluzee:
                           </Root>
                       </Loggers>
                   </Configuration>'
+rest-properties:
+  healthy: true
