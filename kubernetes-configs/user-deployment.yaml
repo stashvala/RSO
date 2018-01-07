@@ -15,7 +15,7 @@ spec:
         name: kubernetes-user
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
-            value: private-coreos
+            value: googlecloud
           - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
             value: http://etcd:2379
           - name: KUMULUZEE_CONFIG_ETCD_HOSTS
