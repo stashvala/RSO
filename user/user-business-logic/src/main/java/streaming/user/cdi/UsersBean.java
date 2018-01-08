@@ -6,7 +6,6 @@ import com.kumuluz.ee.rest.beans.QueryParameters;
 import com.kumuluz.ee.rest.utils.JPAUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -22,15 +21,12 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.transaction.Transactional;
 import javax.ws.rs.InternalServerErrorException;
 import javax.ws.rs.NotFoundException;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
@@ -70,7 +66,14 @@ public class UsersBean {
     public List<User> getUsers() {
         Query query = em.createNamedQuery("User.getAll", User.class);
 
-        return query.getResultList();
+        List<User> users = query.getResultList();
+
+        for(User u : users){
+            List<Video> videos = usersBean.getVideos(u.getId());
+            u.setVideos(videos);
+        }
+
+        return users;
     }
 
     @Log

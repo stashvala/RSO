@@ -4,6 +4,7 @@ import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.sun.org.apache.regexp.internal.RE;
 import com.kumuluz.ee.logs.cdi.Log;
+import org.eclipse.microprofile.metrics.annotation.Metered;
 
 import streaming.user.persistence.User;
 import streaming.user.cdi.UsersBean;
@@ -37,6 +38,7 @@ public class UsersResource {
     protected UriInfo uriInfo;
 
     @GET
+    @Metered
     public Response getUsers() {
         List<User> userList = usersBean.getUsers();
         return Response.ok(userList).build();
