@@ -68,11 +68,9 @@ public class UsersBean {
 
 
     public List<User> getUsers() {
-
         Query query = em.createNamedQuery("User.getAll", User.class);
 
         return query.getResultList();
-
     }
 
     @Log
