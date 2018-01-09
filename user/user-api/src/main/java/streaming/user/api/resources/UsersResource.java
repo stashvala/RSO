@@ -4,7 +4,10 @@ import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.sun.org.apache.regexp.internal.RE;
 import com.kumuluz.ee.logs.cdi.Log;
+import org.eclipse.microprofile.metrics.Counter;
+import org.eclipse.microprofile.metrics.annotation.Metered;
 
+import org.eclipse.microprofile.metrics.annotation.Metric;
 import streaming.user.persistence.User;
 import streaming.user.cdi.UsersBean;
 import streaming.user.api.configuration.RestProperties;
@@ -36,10 +39,22 @@ public class UsersResource {
     @Context
     protected UriInfo uriInfo;
 
+    @Inject
+    @Metric(name = "simple_counter")
+    private Counter counter;
+
     @GET
+    @Metered
     public Response getUsers() {
+        counter.inc(1);
         List<User> userList = usersBean.getUsers();
         return Response.ok(userList).build();
+    }
+
+    @GET
+    @Path("/counter")
+    public Response getCounter(){
+        return Response.status(Response.Status.OK).entity(counter).build();
     }
 
     @GET
