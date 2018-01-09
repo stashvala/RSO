@@ -23,6 +23,13 @@ kumuluzee:
     checks:
       data-source-health-check:
         jndi-name: jdbc/UsersDS
+  cors-filter:
+    servlet:
+      allow-origin: "*"
+  metrics:
+    web-instrumentation:
+      - name: users-endpoint
+        url-pattern: /v1/users/*
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                   <Configuration name="users">
