@@ -74,3 +74,11 @@ services:
       image: demo-api
       ports:
         - "8081:8081"
+
+  config-service:
+    build:
+      context: config
+      dockerfile: Dockerfile
+    image: stashvala/streaming_app:config
+    ports:
+      - "8083:8083"
