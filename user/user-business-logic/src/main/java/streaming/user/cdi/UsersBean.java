@@ -10,6 +10,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 
 import streaming.user.persistence.User;
 import streaming.video.persistence.Video;
@@ -93,6 +96,9 @@ public class UsersBean {
     }
 
     @Log
+    @CircuitBreaker(requestVolumeThreshold = 2)
+    @Fallback(fallbackMethod = "getVideosFallback")
+    @Timeout
     public List<Video> getVideos(String userId) {
         //System.out.println("Basepath = " + basePath.get());
         log.info("Basepath = " + basePath.get());
@@ -127,6 +133,21 @@ public class UsersBean {
         }
 
         return new ArrayList<>();
+    }
+
+    public List<Video> getVideosFallback(String userId) {
+
+        List<Video> videos = new ArrayList<>();
+
+        Video video = new Video();
+
+        video.setTitle("N/A");
+        video.setViews(-1);
+        video.setDuration(0.0);
+
+        videos.add(video);
+
+        return videos;
     }
 
     private List<Video> getObjects(String json) throws IOException {

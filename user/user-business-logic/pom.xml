@@ -48,6 +48,10 @@
             <artifactId>kumuluzee-discovery-etcd</artifactId>
             <version>${kumuluzee-discovery.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.fault.tolerance</groupId>
+            <artifactId>kumuluzee-fault-tolerance-hystrix</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
