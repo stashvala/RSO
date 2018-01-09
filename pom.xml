@@ -13,7 +13,7 @@
         <module>video</module>
         <module>demo</module>
         <module>config</module>
-        <module>subscription</module>
+        <!--<module>subscription</module>-->
     </modules>
 
     <properties>
