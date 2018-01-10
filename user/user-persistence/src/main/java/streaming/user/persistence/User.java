@@ -35,7 +35,7 @@ public class User{
     private Date dateOfBirth;
 
     @Transient
-    private List<Video> videos;
+    private List<Video> saved_videos;
 
     // getter and setter methods
 
@@ -80,10 +80,10 @@ public class User{
     }
 
     public List<Video> getVideos() {
-        return videos;
+        return saved_videos;
     }
 
     public void setVideos(List<Video> videos) {
-        this.videos = videos;
+        this.saved_videos = videos;
     }
 }

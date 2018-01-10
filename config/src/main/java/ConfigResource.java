@@ -51,13 +51,15 @@ public class ConfigResource {
                         "\"stringProperty\": \"%s\"," +
                         "\"booleanProperty\": %b," +
                         "\"integerProperty\": %d" +
+                        "\"maintenance\": \"%s\"," +
                         "}";
 
         response = String.format(
                 response,
                 properties.getStringProperty(),
                 properties.getBooleanProperty(),
-                properties.getIntegerProperty());
+                properties.getIntegerProperty(),
+                properties.getMaintencance());
 
         return Response.ok(response).build();
     }

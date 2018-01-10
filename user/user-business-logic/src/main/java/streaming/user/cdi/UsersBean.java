@@ -71,12 +71,12 @@ public class UsersBean {
 
         List<User> users = query.getResultList();
 
-        for(User u : users){
-            List<Video> videos = usersBean.getVideos(u.getId());
-            u.setVideos(videos);
-        }
-
-        return users;
+//        for(User u : users){
+//            List<Video> videos = usersBean.getVideos(u.getId());
+//            u.setVideos(videos);
+//        }
+//
+       return users;
     }
 
     @Log

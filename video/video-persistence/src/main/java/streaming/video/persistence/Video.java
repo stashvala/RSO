@@ -1,9 +1,9 @@
 package streaming.video.persistence;
 import org.eclipse.persistence.annotations.UuidGenerator;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
+        import javax.persistence.*;
+        import java.io.Serializable;
+        import java.util.Date;
 
 @Entity(name = "video")
 @NamedQueries(value =
@@ -29,6 +29,8 @@ public class Video{
     @Column(name = "views")
     private int views;
 
+    @Column(name = "genre")
+    private String genre;
     // getter and setter methods
 
     public String getId(){
@@ -61,5 +63,13 @@ public class Video{
 
     public void setViews(int views) {
         this.views = views;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 }

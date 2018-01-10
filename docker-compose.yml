@@ -36,6 +36,14 @@ services:
     ports:
       - "5433:5432"
 
+  postgres-subscription:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=subscription
+    ports:
+      - "5434:5432"
+
   user-service:
     build:
       context: user
@@ -82,3 +90,17 @@ services:
     image: stashvala/streaming_app:config
     ports:
       - "8083:8083"
+
+  subs-service:
+    build:
+      context: subscription
+      dockerfile: Dockerfile
+    image: stashvala/streaming_app:subscriptions-api
+    ports:
+      - "8084:8084"
+    environment:
+         - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-subscription:5432/subscription
+         - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+         - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+    depends_on:
+      - postgres-subscription

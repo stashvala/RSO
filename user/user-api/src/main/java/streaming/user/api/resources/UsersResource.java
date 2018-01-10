@@ -68,7 +68,7 @@ public class UsersResource {
     }
 
     @POST
-    @Path("healthy")
+    @Path("/healthy")
     public Response setHealth(Boolean healthy) {
         restProperties.setHealthy(healthy);
         log.info("Setting health to " + healthy);
@@ -79,6 +79,18 @@ public class UsersResource {
     @Path("/{User_id}")
     public Response putUser(@PathParam("User_id") String user_id, User user) {
         user = usersBean.putUser(user_id, user);
+        if (user == null) return Response.status(Response.Status.NOT_FOUND).build();
+
+        if (user.getId() != null) {
+            return Response.status(Response.Status.OK).entity(user).build();
+        } else {
+            return Response.status(Response.Status.NOT_MODIFIED).build();
+        }
+    }
+
+    @POST
+    public Response putUser(User user) {
+        user = usersBean.createUser(user);
         if (user == null) return Response.status(Response.Status.NOT_FOUND).build();
 
         if (user.getId() != null) {

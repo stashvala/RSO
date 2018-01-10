@@ -6,9 +6,13 @@ script:
   - docker build -t $DOCKER_USERNAME/$REPO:users-api -f user/Dockerfile user/
   - docker build -t $DOCKER_USERNAME/$REPO:videos-api -f video/Dockerfile video/
   - docker build -t $DOCKER_USERNAME/$REPO:demo-api -f demo/Dockerfile demo/
+  - docker build -t $DOCKER_USERNAME/$REPO:config -f config/Dockerfile config/
+  - docker build -t $DOCKER_USERNAME/$REPO:subscriptions -f subscription/Dockerfile subscription/
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
   - docker push $DOCKER_USERNAME/$REPO:users-api
   - docker push $DOCKER_USERNAME/$REPO:videos-api
   - docker push $DOCKER_USERNAME/$REPO:demo-api
+  - docker push $DOCKER_USERNAME/$REPO:config
+  - docker push $DOCKER_USERNAME/$REPO:subscriptions-api
