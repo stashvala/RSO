@@ -1,0 +1,14 @@
+kumuluzee:
+  name: recommendation-service
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8086
+    http:
+      port: 8086
+  discovery:
+    etcd:
+      hosts: http://localhost:2379
+    ttl: 20
+    ping-interval: 15

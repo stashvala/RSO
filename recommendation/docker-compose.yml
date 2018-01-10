@@ -1,0 +1,6 @@
+version: "3"
+services:
+  subs-service:
+    image: recommendations-api
+    ports:
+      - "8086:8086"
