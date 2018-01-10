@@ -104,3 +104,26 @@ services:
          - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
     depends_on:
       - postgres-subscription
+
+  postgres-rating:
+      image: postgres:latest
+      environment:
+        - POSTGRES_PASSWORD=postgres
+        - POSTGRES_DB=rating
+      ports:
+        - "5435:5432"
+
+  ratings-service:
+      build:
+        context: rating
+        dockerfile: Dockerfile
+      image: stashvala/streaming_app:ratings-api
+      ports:
+        - "8085:8085"
+      environment:
+           - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-rating:5432/rating
+           - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+           - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+      depends_on:
+        - postgres-rating
+

@@ -1,0 +1,24 @@
+kumuluzee:
+  name: rating-service
+  env:
+    name: dev
+  version: 1.0.0
+  server:
+    base-url: http://localhost:8085
+    http:
+      port: 8085
+  datasources:
+    - jndi-name: jdbc/RatingsDS
+      connection-url: jdbc:postgresql://172.17.0.1:5435/rating
+      username: postgres
+      password: postgres
+      max-pool-size: 20
+  health:
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/RatingsDS
+  cors-filter:
+    servlet:
+      allow-origin: "*"
+rest-properties:
+  healthy: true

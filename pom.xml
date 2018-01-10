@@ -14,6 +14,7 @@
         <module>demo</module>
         <module>config</module>
         <module>subscription</module>
+        <module>rating</module>
     </modules>
 
     <properties>
