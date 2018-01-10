@@ -19,10 +19,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.InternalServerErrorException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 @RequestScoped
 @Log
@@ -60,6 +57,28 @@ public class RecommendationsBean {
         int recommendedIdx = r.nextInt(videos.size());
 
         return videos.get(recommendedIdx);
+    }
+
+    public List<Video> recommendN(String userId, int n) {
+
+        List<Video> videos = getVideos(userId);
+
+        if(videos == null)
+            return  null;
+
+        //Should be replaced with recommendation based on ratings
+        List<Video> rec = new ArrayList<Video>();
+        Random r = new Random();
+        while (n > 0 && videos.size() > 0){
+
+            int recommendedIdx = r.nextInt(videos.size());
+            rec.add(videos.get(recommendedIdx));
+            videos.remove(recommendedIdx);
+
+            n--;
+        }
+
+        return rec;
     }
 
 

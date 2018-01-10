@@ -28,8 +28,6 @@ public class RecommendationResource {
     @Inject
     private RecommendationsBean recBean;
 
-
-
     @Context
     protected UriInfo uriInfo;
 
@@ -37,6 +35,19 @@ public class RecommendationResource {
     @Path("/{user_id}")
     public Response getRecommendation(@PathParam("user_id") String id) {
         Video v = recBean.recommendOne(id);
+
+        if(v == null)
+            return Response.status(Response.Status.NOT_FOUND).build();
+
+        return Response.ok(v).build();
+    }
+
+    @Log
+    @GET
+    @Path("/{user_id}/{n}")
+    public Response getRecommendations(@PathParam("user_id") String id,@PathParam("n") int n) {
+        log.info("Recommending "+n+" videos for user "+ id+".");
+        List<Video> v = recBean.recommendN(id, n);
 
         if(v == null)
             return Response.status(Response.Status.NOT_FOUND).build();
