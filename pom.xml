@@ -15,6 +15,8 @@
         <module>config</module>
         <module>subscription</module>
         <module>rating</module>
+        <module>recommendation</module>
+        <module>comment</module>
     </modules>
 
     <properties>

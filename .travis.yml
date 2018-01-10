@@ -9,6 +9,8 @@ script:
   - docker build -t $DOCKER_USERNAME/$REPO:config -f config/Dockerfile config/
   - docker build -t $DOCKER_USERNAME/$REPO:subscriptions -f subscription/Dockerfile subscription/
   - docker build -t $DOCKER_USERNAME/$REPO:ratings -f rating/Dockerfile rating/
+  - docker build -t $DOCKER_USERNAME/$REPO:recommendations -f recommendation/Dockerfile recommendation/
+  - docker build -t $DOCKER_USERNAME/$REPO:comments -f comment/Dockerfile comment/
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
@@ -18,3 +20,5 @@ after_success:
   - docker push $DOCKER_USERNAME/$REPO:config
   - docker push $DOCKER_USERNAME/$REPO:subscriptions-api
   - docker push $DOCKER_USERNAME/$REPO:ratings-api
+  - docker push $DOCKER_USERNAME/$REPO:recommendations-api
+  - docker push $DOCKER_USERNAME/$REPO:comments-api

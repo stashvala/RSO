@@ -4,14 +4,14 @@ services:
     image: postgres:latest
     environment:
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=rating
+      - POSTGRES_DB=comment
     ports:
       - "5432:5432"
-  ratings-service:
-    image: ratings-api
+  comments-service:
+    image: comments-api
     environment:
-      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/rating
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/comment
     ports:
-      - "8085:8085"
+      - "8087:8087"
     depends_on:
       - postgres

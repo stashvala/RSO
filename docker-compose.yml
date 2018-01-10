@@ -127,3 +127,35 @@ services:
       depends_on:
         - postgres-rating
 
+  recommendations-service:
+    build:
+      context: recommendation
+      dockerfile: Dockerfile
+    image: stashvala/streaming_app:recommendations-api
+    ports:
+      - "8086:8086"
+    environment:
+         - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+         - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+
+  postgres-comment:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=comment
+    ports:
+      - "5436:5432"
+
+  comments-service:
+    build:
+      context: comment
+      dockerfile: Dockerfile
+    image: stashvala/streaming_app:comments-api
+    ports:
+      - "8087:8087"
+    environment:
+         - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-comment:5432/comment
+         - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+         - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+    depends_on:
+      - postgres-comment

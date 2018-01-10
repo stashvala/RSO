@@ -1,22 +1,22 @@
 kumuluzee:
-  name: rating-service
+  name: comments-service
   env:
     name: dev
   version: 1.0.0
   server:
-    base-url: http://localhost:8085
+    base-url: http://localhost:8087
     http:
-      port: 8085
+      port: 8087
   datasources:
-    - jndi-name: jdbc/RatingsDS
-      connection-url: jdbc:postgresql://172.17.0.1:5435/rating
+    - jndi-name: jdbc/CommentsDS
+      connection-url: jdbc:postgresql://172.17.0.1:5436/comment
       username: postgres
       password: postgres
       max-pool-size: 20
   health:
     checks:
       data-source-health-check:
-        jndi-name: jdbc/RatingsDS
+        jndi-name: jdbc/CommentsDS
   cors-filter:
     servlet:
       allow-origin: "*"

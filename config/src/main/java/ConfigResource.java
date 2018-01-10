@@ -50,8 +50,8 @@ public class ConfigResource {
                 "{" +
                         "\"stringProperty\": \"%s\"," +
                         "\"booleanProperty\": %b," +
-                        "\"integerProperty\": %d" +
-                        "\"maintenance\": \"%s\"," +
+                        "\"integerProperty\": %d," +
+                        "\"maintenance\": \"%s\"" +
                         "}";
 
         response = String.format(
