@@ -18,6 +18,7 @@
         <module>recommendation</module>
         <module>comment</module>
         <module>uploader</module>
+        <module>player</module>
     </modules>
 
     <properties>

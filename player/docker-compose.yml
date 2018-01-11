@@ -1,0 +1,6 @@
+version: "3"
+services:
+  subs-service:
+    image: player-api
+    ports:
+      - "8089:8089"

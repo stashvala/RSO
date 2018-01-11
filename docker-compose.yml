@@ -181,3 +181,14 @@ services:
       - POSTGRES_DB=uploader
     ports:
       - "5437:5432"
+
+  player-service:
+      build:
+        context: player
+        dockerfile: Dockerfile
+      image: stashvala/streaming_app:player-api
+      ports:
+        - "8089:8089"
+      environment:
+           - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+           - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
