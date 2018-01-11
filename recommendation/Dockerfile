@@ -6,6 +6,6 @@ WORKDIR /app
 
 ADD ./recommendation-api/target/recommendation-api-1.0-SNAPSHOT.jar /app
 
-EXPOSE 8085
+EXPOSE 8086
 
 CMD ["java", "-jar", "recommendation-api-1.0-SNAPSHOT.jar"]
