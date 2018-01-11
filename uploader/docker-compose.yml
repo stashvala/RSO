@@ -1,0 +1,17 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=uploader
+    ports:
+      - "5432:5432"
+  uploader-service:
+    image: uploaders-api
+    environment:
+      - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres:5432/uploader
+    ports:
+      - "8088:8088"
+    depends_on:
+      - postgres

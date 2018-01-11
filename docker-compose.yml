@@ -159,3 +159,25 @@ services:
          - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
     depends_on:
       - postgres-comment
+
+  uploaders-service:
+    build:
+      context: uploader
+      dockerfile: Dockerfile
+    image: stashvala/streaming_app:uploaders-api
+    ports:
+      - "8088:8088"
+    environment:
+         - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://postgres-uploader:5432/uploader
+         - KUMULUZEE_CONFIG_ETCD_HOSTS=http://etcd:2379
+         - KUMULUZEE_DISCOVERY_ETCD_HOSTS=http://etcd:2379
+    depends_on:
+      - postgres-uploader
+
+  postgres-uploader:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=uploader
+    ports:
+      - "5437:5432"

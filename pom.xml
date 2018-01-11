@@ -17,6 +17,7 @@
         <module>rating</module>
         <module>recommendation</module>
         <module>comment</module>
+        <module>uploader</module>
     </modules>
 
     <properties>

@@ -1,0 +1,3 @@
+INSERT INTO uploaders (id, first_name, last_name, address, popularity, credits,  password, date_of_birth) VALUES (1, 'Pewdie', 'Pie', 'Skrivnostna 12', 0.9, '2.1 BTC', 'password12', DATE '1992-01-13');
+INSERT INTO uploaders (id, first_name, last_name, address, popularity, credits, password, date_of_birth) VALUES (2, 'Ivan', 'Janez', 'Ljubljanska ulica 54',0.54, '0.0341 BTC', '12fff34', DATE '2000-11-12');
+INSERT INTO uploaders (id, first_name, last_name, address, popularity, credits, password, date_of_birth) VALUES (3, 'Nevenka', 'Neznanec', 'Prikrita cesta 15',  0.71, '0.42 BTC', 'a1b2c3d4', DATE '1983-02-25');
