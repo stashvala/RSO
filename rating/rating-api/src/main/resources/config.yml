@@ -20,6 +20,10 @@ kumuluzee:
   cors-filter:
     servlet:
       allow-origin: "*"
+  metrics:
+      web-instrumentation:
+        - name: ratings-endpoint
+          url-pattern: /v1/ratings/*
   config:
     etcd:
         hosts: http://192.168.99.100:2379

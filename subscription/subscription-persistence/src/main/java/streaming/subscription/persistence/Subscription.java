@@ -68,7 +68,5 @@ public class Subscription {
     public void setValidUntil(Date validUntil) {
         this.validUntil = validUntil;
     }
-    // getter and setter methods
-
 
 }

@@ -20,5 +20,9 @@ kumuluzee:
   cors-filter:
     servlet:
       allow-origin: "*"
+  metrics:
+    web-instrumentation:
+      - name: subs-endpoint
+        url-pattern: /v1/subscriptions/*
 rest-properties:
   healthy: true
