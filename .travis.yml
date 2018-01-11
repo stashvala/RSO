@@ -11,7 +11,7 @@ script:
   - docker build -t $DOCKER_USERNAME/$REPO:ratings-api -f rating/Dockerfile rating/
   - docker build -t $DOCKER_USERNAME/$REPO:recommendations-api -f recommendation/Dockerfile recommendation/
   - docker build -t $DOCKER_USERNAME/$REPO:comments-api -f comment/Dockerfile comment/
-  - docker build -t $DOCKER_USERNAME/$REPO:uploaders-api -f upload/Dockerfile upload/
+  - docker build -t $DOCKER_USERNAME/$REPO:uploaders-api -f uploader/Dockerfile uploader/
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
