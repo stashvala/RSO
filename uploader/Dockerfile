@@ -6,6 +6,6 @@ WORKDIR /app
 
 ADD ./uploader-api/target/uploader-api-1.0-SNAPSHOT.jar /app
 
-EXPOSE 8080
+EXPOSE 8088
 
 CMD ["java", "-jar", "uploader-api-1.0-SNAPSHOT.jar"]
