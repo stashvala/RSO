@@ -13,6 +13,7 @@ script:
   - docker build -t $DOCKER_USERNAME/$REPO:comments-api -f comment/Dockerfile comment/
   - docker build -t $DOCKER_USERNAME/$REPO:uploaders-api -f uploader/Dockerfile uploader/
   - docker build -t $DOCKER_USERNAME/$REPO:player-api -f player/Dockerfile player/
+  - docker build -t $DOCKER_USERNAME/$REPO:config -f config/Dockerfile config/
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
@@ -26,3 +27,4 @@ after_success:
   - docker push $DOCKER_USERNAME/$REPO:comments-api
   - docker push $DOCKER_USERNAME/$REPO:uploaders-api
   - docker push $DOCKER_USERNAME/$REPO:player-api
+  - docker push $DOCKER_USERNAME/$REPO:config
