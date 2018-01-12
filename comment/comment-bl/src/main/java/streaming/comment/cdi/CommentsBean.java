@@ -40,9 +40,8 @@ public class CommentsBean {
 
     @Log
     public List<Comment> getComments() {
-        Query query = em.createNamedQuery("comment.getAll", Comment.class);
+        Query query = em.createNamedQuery("Comment.getAll", Comment.class);
         return query.getResultList();
-
     }
 
     public Comment createComment(Comment r) {
@@ -108,7 +107,7 @@ public class CommentsBean {
     @Log
     public List<Comment> getCommentsForUser(String userId) {
         log.debug("Finding comment for user" + userId);
-        Query q = em.createQuery("SELECT s from comment  s where  s.userId = :user")
+        Query q = em.createQuery("SELECT s from comments s where s.userId = :user")
                 .setParameter("user", userId);
         return q.getResultList();
     }
@@ -117,7 +116,7 @@ public class CommentsBean {
     @Log
     public List<Comment> getCommentsForVideo(String videoId) {
         log.debug("Finding comment for video" + videoId);
-        Query q = em.createQuery("SELECT s from comment  s where  s.videoId = :user")
+        Query q = em.createQuery("SELECT s from comments s where s.videoId = :user")
                 .setParameter("user", videoId);
         return q.getResultList();
     }

@@ -5,14 +5,14 @@ import org.eclipse.persistence.annotations.UuidGenerator;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "comment")
+@Entity(name = "comments")
 @NamedQueries(value =
         {
-                @NamedQuery(name = "comment.getAll", query = "SELECT s FROM comment s")
+                @NamedQuery(name = "Comment.getAll", query = "SELECT c FROM comments c")
         })
 @UuidGenerator(name =  "idGenerator")
-
 public class Comment {
+
     @Id
     @GeneratedValue(generator = "idGenerator")
     private String id;

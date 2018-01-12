@@ -44,33 +44,32 @@ public class CommentResource {
     @GET
     @Path("/{comment_id}")
     public Response getComment(@PathParam("comment_id") String id) {
-        Comment s = commentsBean.getComment(id);
+        Comment c = commentsBean.getComment(id);
 
         if (id == null) return Response.status(Response.Status.NOT_FOUND).build();
 
-        return Response.ok(s).build();
+        return Response.status(Response.Status.OK).entity(c).build();
     }
 
     @GET
     @Path("/user/{user_id}")
     public Response getCommentForUser(@PathParam("user_id") String id) {
-        List<Comment> s = commentsBean.getCommentsForUser(id);
-        if(s == null)
+        List<Comment> c = commentsBean.getCommentsForUser(id);
+        if(c == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        return Response.ok(s).build();
+        return Response.status(Response.Status.OK).entity(c).build();
     }
-
     @Log
     @GET
     @Path("/video/{video_id}")
     public Response getCommentForVideo(@PathParam("video_id") String id) {
-        List<Comment> s = commentsBean.getCommentsForVideo(id);
+        List<Comment> c = commentsBean.getCommentsForVideo(id);
 
-        if(s == null)
+        if(c == null)
             return Response.status(Response.Status.NOT_FOUND).build();
 
-        return Response.ok(s).build();
+        return Response.status(Response.Status.OK).entity(c).build();
     }
 
     @POST
