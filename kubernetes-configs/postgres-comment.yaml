@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-comment-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-comment
+    spec:
+      containers:
+      - image: postgres:latest
+        name: postgres-comment
+        env:
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          - name: POSTGRES_DB
+            value: comment
+
+        ports:
+        - containerPort: 5432
+          name: server
+          protocol: TCP

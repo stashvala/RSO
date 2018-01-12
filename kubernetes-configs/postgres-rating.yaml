@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: postgres-rating-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres-rating
+    spec:
+      containers:
+      - image: postgres:latest
+        name: postgres-rating
+        env:
+          - name: POSTGRES_PASSWORD
+            value: postgres
+          - name: POSTGRES_DB
+            value: rating
+
+        ports:
+        - containerPort: 5432
+          name: server
+          protocol: TCP

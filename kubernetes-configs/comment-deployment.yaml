@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: comment-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: comment
+    spec:
+      containers:
+      - image: stashvala/streaming_app:comments-api
+        imagePullPolicy: Always
+        name: kubernetes-comment
+        env:
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: private-coreos
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-comment:5432/comment
+          - name: KUMULUZEE_DATASOURCES0_PASSWORD
+            value: postgres
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-comment:5432/comment
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: server
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        ports:
+        - containerPort: 8087
+          name: server
+          protocol: TCP

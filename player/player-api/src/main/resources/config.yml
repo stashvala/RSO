@@ -7,8 +7,9 @@ kumuluzee:
     base-url: http://localhost:8089
     http:
       port: 8089
+  config:
+    etcd:
+      hosts: http://localhost:2379
   discovery:
     etcd:
       hosts: http://localhost:2379
-    ttl: 20
-    ping-interval: 15

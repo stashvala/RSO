@@ -1,0 +1,38 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: rating-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: rating
+    spec:
+      containers:
+      - image: stashvala/streaming_app:ratings-api
+        imagePullPolicy: Always
+        name: kubernetes-rating
+        env:
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: private-coreos
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-rating:5432/rating
+          - name: KUMULUZEE_DATASOURCES0_PASSWORD
+            value: postgres
+          - name: KUMULUZEE_HEALTH_CHECKS_DATASOURCEHEALTHCHECK_CONNECTIONURL
+            value: jdbc:postgresql://postgres-rating:5432/rating
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: server
+          initialDelaySeconds: 10
+          periodSeconds: 3
+        ports:
+        - containerPort: 8085
+          name: server
+          protocol: TCP

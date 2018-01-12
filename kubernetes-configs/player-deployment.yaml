@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: player-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: player
+    spec:
+      containers:
+      - image: stashvala/streaming_app:player-api
+        imagePullPolicy: Always
+        name: kubernetes-player
+        env:
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: private-coreos
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
+        ports:
+        - containerPort: 8089
+          name: server
+          protocol: TCP
