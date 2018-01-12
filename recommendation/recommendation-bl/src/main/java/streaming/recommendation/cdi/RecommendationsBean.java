@@ -30,10 +30,6 @@ public class RecommendationsBean {
     private Logger log = LogManager.getLogger(RecommendationsBean.class.getName());
 
     @Inject
-    @DiscoverService(value = "rating-service", environment = "dev")
-    private Optional<String> basePathRatings;
-
-    @Inject
     @DiscoverService(value = "video-service", environment = "dev")
     private Optional<String> basePathVideos;
 
