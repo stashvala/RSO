@@ -1,9 +1,5 @@
 package streaming.recommendation.api.resources;
 
-
-import com.kumuluz.ee.logs.LogManager;
-import com.kumuluz.ee.logs.Logger;
-import com.kumuluz.ee.logs.cdi.Log;
 import streaming.recommendation.cdi.RecommendationsBean;
 import streaming.video.persistence.Video;
 
@@ -16,14 +12,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.util.List;
 
-@Log
 @RequestScoped
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @Path("recommendations")
 public class RecommendationResource {
 
-    private Logger log = LogManager.getLogger(RecommendationResource.class.getName());
 
     @Inject
     private RecommendationsBean recBean;
@@ -42,11 +36,9 @@ public class RecommendationResource {
         return Response.ok(v).build();
     }
 
-    @Log
     @GET
     @Path("/{user_id}/{n}")
     public Response getRecommendations(@PathParam("user_id") String id,@PathParam("n") int n) {
-        log.info("Recommending "+n+" videos for user "+ id+".");
         List<Video> v = recBean.recommendN(id, n);
 
         if(v == null)

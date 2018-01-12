@@ -2,10 +2,6 @@ package streaming.recommendation.cdi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
-import com.kumuluz.ee.logs.LogManager;
-import com.kumuluz.ee.logs.Logger;
-import com.kumuluz.ee.logs.cdi.Log;
-import io.netty.util.Timeout;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -22,12 +18,10 @@ import java.io.IOException;
 import java.util.*;
 
 @RequestScoped
-@Log
 public class RecommendationsBean {
 
     private ObjectMapper objectMapper;
     private HttpClient httpClient;
-    private Logger log = LogManager.getLogger(RecommendationsBean.class.getName());
 
     @Inject
     @DiscoverService(value = "video-service", environment = "dev")
@@ -40,7 +34,6 @@ public class RecommendationsBean {
 
     }
 
-    @Log
     public Video recommendOne(String userId) {
 
         List<Video> videos = getVideos(userId);
@@ -77,13 +70,8 @@ public class RecommendationsBean {
         return rec;
     }
 
-
-    @Log
     public List<Video> getVideos(String userId) {
-        //System.out.println("Basepath = " + basePath.get());
-        log.info("Basepath = " + basePathVideos.get());
         if (!basePathVideos.isPresent()) {
-            log.error("Video service not yet discovered...");
         }
         try {
             HttpGet request = new HttpGet(basePathVideos.get() + "/v1/videos");
@@ -97,10 +85,8 @@ public class RecommendationsBean {
                 }
             } else {
                 String msg = "Remote server '" + basePathVideos + "' has responded with status " + status + ".";
-                log.error(msg);
             }
         } catch (IOException e) {
-            log.error(e.getMessage());
         }
 
         return new ArrayList<>();
